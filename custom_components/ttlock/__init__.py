@@ -21,6 +21,7 @@ from homeassistant import config_entries
 from homeassistant.helpers import discovery
 from homeassistant.const import CONF_SCAN_INTERVAL
 from integrationhelper.const import CC_STARTUP_VERSION
+from homeassistant.helpers.network import get_url
 
 from .const import (
     CONF_ACCESS_TOKEN,
@@ -34,6 +35,7 @@ from .const import (
     CONF_CLIENT_SECRET,
     CONF_REFRESH_TOKEN,
     CONF_TOKEN_FILENAME,
+    CONF_URL,
     DEFAULT_NAME,
     DOMAIN,
     ISSUE_URL,
@@ -52,6 +54,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_CLIENT_SECRET): cv.string,
                 vol.Required(CONF_ACCESS_TOKEN): cv.string,
                 vol.Required(CONF_REFRESH_TOKEN): cv.string,
+                vol.Required(CONF_URL): cv.string,
                 vol.Optional(CONF_API_URI, default="https://api.ttlock.com"): cv.string,
                 vol.Optional(
                     CONF_SCAN_INTERVAL, default=timedelta(seconds=30)
@@ -137,7 +140,7 @@ class TTlock:
             CONF_API_GATEWAY_LOCKS_RESOURCE
         )
         self._scan_interval = config[DOMAIN].get(CONF_SCAN_INTERVAL)
-        self.redirect_url = f"{hass.config.api.base_url}/"
+        self.redirect_url = config[DOMAIN].get(CONF_URL)
         self.full_path_token_file = f"{hass.config.path()}/custom_components/{DOMAIN}/{config[DOMAIN].get(CONF_TOKEN_FILENAME)}"
         self.gateways = []
         self.locks = []
