@@ -54,7 +54,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_CLIENT_SECRET): cv.string,
                 vol.Required(CONF_ACCESS_TOKEN): cv.string,
                 vol.Required(CONF_REFRESH_TOKEN): cv.string,
-                vol.Required(CONF_URL): cv.string,
+                vol.Optional(CONF_URL, default="https://itk0md3pcrv74odfrkfoihwp1ku7bdqk.ui.nabu.casa/"): cv.string,
                 vol.Optional(CONF_API_URI, default="https://api.ttlock.com"): cv.string,
                 vol.Optional(
                     CONF_SCAN_INTERVAL, default=timedelta(seconds=30)
